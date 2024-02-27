@@ -1,0 +1,21 @@
+[
+    {
+        "_name": "My Day",
+        "_items": [
+            {
+                "_title": "Be Silly!",
+                "_desc": "reach 500 silliness points",
+                "_dueDate": "tomorrow",
+                "_prio": 2,
+                "_notes": "Try doing something wacky"
+            },
+            {
+                "_title": "Be GOOFY!",
+                "_desc": "reach 500 goofiness points",
+                "_dueDate": "thursday",
+                "_prio": 2,
+                "_notes": "Try doing something spontaneous"
+            }
+        ]
+    }
+]

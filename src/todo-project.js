@@ -1,6 +1,15 @@
 class TodoProject {
-    constructor(items) {
+    constructor(name, items) {
+        this._name = name;
         this._items = items;
+    }
+
+    get name() {
+        return this._name;
+    }
+
+    set name(newName) {
+        this._name = newName;
     }
 
     get items() {
