@@ -17,5 +17,24 @@
                 "_notes": "Try doing something spontaneous"
             }
         ]
+    },
+    {
+        "_name": "Grocery",
+        "_items": [
+            {
+                "_title": "Eggs",
+                "_desc": "Buy a dozen brown eggs",
+                "_dueDate": "tomorrow",
+                "_prio": 2,
+                "_notes": "HEB"
+            },
+            {
+                "_title": "Milk",
+                "_desc": "Buy 2% milk, store brand",
+                "_dueDate": "tomorrow",
+                "_prio": 2,
+                "_notes": "Make sure we have 2 weeks before expiry"
+            }
+        ]
     }
 ]

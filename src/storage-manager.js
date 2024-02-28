@@ -22,6 +22,10 @@ class StorageManager {
     get projects() {
         return this._projects;
     }
+
+    updateLocalStorage() {
+        localStorage.setItem("projects", JSON.stringify(this._projects));
+    }
 }
 
 export default StorageManager;  
