@@ -10,52 +10,12 @@
 
 class TodoItem {
     constructor(title, desc, dueDate, prio = 1, notes = "") {
-        this._title = title;
-        this._desc = desc;
-        this._dueDate = dueDate;
-        this._prio = prio;
-        this._notes = notes;
+        this.title = title;
+        this.desc = desc;
+        this.dueDate = dueDate;
+        this.prio = prio;
+        this.notes = notes;
     } 
-
-    get title() {
-        return this._title;
-    }
-
-    get desc() {
-        return this._desc;
-    }
-
-    get dueDate() {
-        return this._dueDate;
-    }
-
-    get prio() {
-        return this._prio;
-    }
-
-    get notes() {
-        return this._notes;
-    }
-
-    set title(newTitle) {
-        this._title = newTitle;
-    }
-    
-    set desc(newDesc) {
-        this._desc = newDesc;
-    }
-    
-    set dueDate(newDate) {
-        this._dueDate = newDate;
-    }
-    
-    set prio(newPrio) {
-        this._prio = newPrio;
-    }
-    
-    set notes(newNotes) {
-        this._notes = newNotes;
-    }
 }
 
 export default TodoItem;

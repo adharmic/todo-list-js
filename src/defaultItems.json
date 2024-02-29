@@ -1,39 +1,39 @@
 [
     {
-        "_name": "My Day",
-        "_items": [
+        "name": "My Day",
+        "items": [
             {
-                "_title": "Be Silly!",
-                "_desc": "reach 500 silliness points",
-                "_dueDate": "tomorrow",
-                "_prio": 2,
-                "_notes": "Try doing something wacky"
+                "title": "Be Silly!",
+                "desc": "reach 500 silliness points",
+                "dueDate": "tomorrow",
+                "prio": 2,
+                "notes": "Try doing something wacky"
             },
             {
-                "_title": "Be GOOFY!",
-                "_desc": "reach 500 goofiness points",
-                "_dueDate": "thursday",
-                "_prio": 2,
-                "_notes": "Try doing something spontaneous"
+                "title": "Be GOOFY!",
+                "desc": "reach 500 goofiness points",
+                "dueDate": "thursday",
+                "prio": 2,
+                "notes": "Try doing something spontaneous"
             }
         ]
     },
     {
-        "_name": "Grocery",
-        "_items": [
+        "name": "Grocery",
+        "items": [
             {
-                "_title": "Eggs",
-                "_desc": "Buy a dozen brown eggs",
-                "_dueDate": "tomorrow",
-                "_prio": 2,
-                "_notes": "HEB"
+                "title": "Eggs",
+                "desc": "Buy a dozen brown eggs",
+                "dueDate": "tomorrow",
+                "prio": 2,
+                "notes": "HEB"
             },
             {
-                "_title": "Milk",
-                "_desc": "Buy 2% milk, store brand",
-                "_dueDate": "tomorrow",
-                "_prio": 2,
-                "_notes": "Make sure we have 2 weeks before expiry"
+                "title": "Milk",
+                "desc": "Buy 2% milk, store brand",
+                "dueDate": "tomorrow",
+                "prio": 2,
+                "notes": "Make sure we have 2 weeks before expiry"
             }
         ]
     }

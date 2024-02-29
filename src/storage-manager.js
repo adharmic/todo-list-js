@@ -10,21 +10,17 @@ class StorageManager {
         // Check localstorage for project list
         if  (localStorage.getItem("projects") === null) {
             // No localstorage, so load default data
-            this._projects = starterProjects;
+            this.projects = starterProjects;
             localStorage.setItem("projects", JSON.stringify(starterProjects));
         }
         else {
             // Localstorage found, so load it!
-            this._projects = JSON.parse(localStorage.getItem("projects"));
+            this.projects = JSON.parse(localStorage.getItem("projects"));
         }
     }
 
-    get projects() {
-        return this._projects;
-    }
-
     updateLocalStorage() {
-        localStorage.setItem("projects", JSON.stringify(this._projects));
+        localStorage.setItem("projects", JSON.stringify(this.projects));
     }
 }
 
