@@ -37,9 +37,29 @@ class DOMHandler  {
         // TODO: Figure out best way to append multiple children to DOM element
         this.projectListElem.replaceChildren();
         let i = 0;
+
+        this.renderAddProjectButton();
+
         for (let i = 0; i < this.storageManager.projects.length; i++) {
             let projectElem = document.createElement('li');
-            projectElem.textContent = this.storageManager.projects[i].name;
+            projectElem.classList.add('project-item');
+
+            let projectNameElem = document.createElement('h1');
+            projectNameElem.textContent = this.storageManager.projects[i].name;
+
+            let deleteProjectButton = document.createElement('button');
+            deleteProjectButton.textContent = "Delete Project";
+
+            deleteProjectButton.onclick = (e) => {
+                e.stopPropagation();
+                this.storageManager.projects.splice(i, 1);
+                this.storageManager.updateLocalStorage();
+                this.renderProjectList();
+                this.openProject(0);
+            }
+
+            projectElem.appendChild(projectNameElem);
+            projectElem.appendChild(deleteProjectButton);
 
             projectElem.onclick = () => {
                 this.openProject(i);
@@ -47,8 +67,6 @@ class DOMHandler  {
 
             this.projectListElem.appendChild(projectElem);
         }
-
-        this.renderAddProjectButton();
     }
 
     renderAddProjectButton() {
@@ -74,15 +92,13 @@ class DOMHandler  {
         this.currentProject = index;
         this.todoItemsElem.replaceChildren();
         let currProjItems = this.storageManager.projects[index].items;
-        console.log(this.storageManager.projects[index]);
-        console.log(currProjItems);
+
+        this.renderAddItemButton();
 
         // Loop through todo items in currProj
         for (let i = 0; i < currProjItems.length; i++) {
             this.todoItemsElem.appendChild(this.getTodoElement(currProjItems[i], i));
         }
-
-        this.renderAddItemButton();
     }
 
     renderAddItemButton() {
@@ -93,7 +109,7 @@ class DOMHandler  {
 
             // For now, just insert a dummy value
             let testItem2 = new TodoItem("Be GOOFY!", "reach 500 goofiness points", "thursday", 2, "Try doing something spontaneous");
-            this.storageManager.projects[this.currentProject].items.push(testItem2);
+            this.storageManager.projects[this.currentProject].items.unshift(testItem2);
             this.openProject(this.currentProject);
             this.storageManager.updateLocalStorage();
         }
@@ -116,8 +132,7 @@ class DOMHandler  {
 
         let deleteItem = document.createElement('button');
         deleteItem.textContent = "Delete";
-        deleteItem.onclick = (index) => {
-            console.log(this.currentProject);
+        deleteItem.onclick = (e) => {
             this.storageManager.projects[this.currentProject].items.splice(index, 1);
             this.openProject(this.currentProject);
             this.storageManager.updateLocalStorage();
