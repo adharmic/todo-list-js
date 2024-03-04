@@ -1,17 +1,7 @@
-// Should have a list of projects
-// Should have access to the storage manager
-// Required methods:
-// 1. Populate sidebar with projects
-// 2. Redraw main section with todo items when project is selected (using index)
-// 3. Draw individual todo item card (color based on prio)
-// 4. Draw individual project list items
-// 5. Draw modal for creating new todo list
-// -- This method should have a parameter for editing vs. creation.
-// -- Editing should not create a new item and instead update an existing one.
-// 6. Draw
-
-// When project is deleted/created -> update local storage, redraw sidebar
-// When todo item is deleted/created/updated -> update local storage, redraw main view
+// TODO: 
+// Implement priority system
+// Implement completion system
+// Color list items based on priority
 
 import TodoItem from "./todo-item";
 import TodoProject from "./todo-project";
@@ -47,8 +37,16 @@ class DOMHandler  {
             let projectNameElem = document.createElement('h2');
             projectNameElem.textContent = this.storageManager.projects[i].name;
 
+            let editProjectButton = document.createElement('button');
+            editProjectButton.textContent = "Edit";
+
+            editProjectButton.onclick = (e) => {
+                e.stopPropagation();
+                this.showProjectModal(i);
+            }
+
             let deleteProjectButton = document.createElement('button');
-            deleteProjectButton.textContent = "Delete Project";
+            deleteProjectButton.textContent = "Delete";
 
             deleteProjectButton.onclick = (e) => {
                 e.stopPropagation();
@@ -59,6 +57,7 @@ class DOMHandler  {
             }
 
             projectElem.appendChild(projectNameElem);
+            projectElem.appendChild(editProjectButton);
             projectElem.appendChild(deleteProjectButton);
 
             projectElem.onclick = () => {
@@ -75,10 +74,7 @@ class DOMHandler  {
         addProjectButton.textContent = "Add Project";
         addProjectButton.classList.add('add-project');
         addProjectButton.onclick = () => {
-            this.storageManager.projects.push(new TodoProject("New Project", []));
-            this.storageManager.updateLocalStorage();
-            this.renderProjectList();
-            this.openProject(this.storageManager.projects.length - 1);
+            this.showProjectModal();
         }
 
         this.projectListElem.appendChild(addProjectButton);
@@ -93,15 +89,14 @@ class DOMHandler  {
         this.todoItemsElem.replaceChildren();
         let currProjItems = this.storageManager.projects[index]?.items;
 
-        this.renderAddItemButton();
+        let listHeader = document.createElement('div');
+        listHeader.classList.add('list-header');
 
-        // Loop through todo items in currProj
-        for (let i = 0; i < currProjItems.length; i++) {
-            this.todoItemsElem.appendChild(this.getTodoElement(currProjItems[i], i));
-        }
-    }
+        let titleElem = document.createElement('h1');
+        titleElem.textContent = this.storageManager.projects[index]?.name;
 
-    renderAddItemButton() {
+        listHeader.appendChild(titleElem);
+
         let addItemButton = document.createElement('button');
         addItemButton.textContent = "Add Item";
         addItemButton.onclick = (e) => {
@@ -109,7 +104,14 @@ class DOMHandler  {
             this.showTodoModal(null, this.storageManager.projects[this.currentProject]?.items);
         }
 
-        this.todoItemsElem.appendChild(addItemButton);
+        listHeader.appendChild(addItemButton);
+
+        this.todoItemsElem.appendChild(listHeader);
+
+        // Loop through todo items in currProj
+        for (let i = 0; i < currProjItems.length; i++) {
+            this.todoItemsElem.appendChild(this.getTodoElement(currProjItems[i], i));
+        }
     }
 
     getTodoElement(item, index) {
@@ -153,7 +155,7 @@ class DOMHandler  {
         return itemCard;
     }
 
-    closeTodoModal() {
+    hideTodoModal() {
         let overlay = document.querySelector('.overlay');
         overlay.classList.add('hidden');
 
@@ -179,7 +181,7 @@ class DOMHandler  {
 
         cancel.onclick = (e) => {
             e.preventDefault();
-            this.closeTodoModal();
+            this.hideTodoModal();
         }
 
         if (index !== null) {
@@ -191,6 +193,7 @@ class DOMHandler  {
             notesBox.value = currTodo.notes;
         
             submit.onclick = (e) => {
+                // TODO: VALIDATE ENTRY
                 e.preventDefault();
                 currTodo.title = nameBox.value;
                 currTodo.desc = descBox.value;
@@ -200,19 +203,71 @@ class DOMHandler  {
 
                 this.storageManager.updateLocalStorage();
                 this.openProject(this.currentProject);
-                this.closeTodoModal();
+                this.hideTodoModal();
             };
         }
         else {
             submit.onclick = (e) => {
+                // TODO: VALIDATE ENTRY
                 e.preventDefault();
                 let newTodo = new TodoItem(nameBox.value, descBox.value, dateBox.value, prioBox.value, notesBox.value);
                 items.unshift(newTodo);
                 this.openProject(this.currentProject);
                 this.storageManager.updateLocalStorage();
-                this.closeTodoModal();
+                this.hideTodoModal();
             }
         }
+    }
+
+    showProjectModal(index = null) {
+        let overlay = document.querySelector('.overlay');
+        overlay.classList.remove('hidden');
+
+        let modal = document.querySelector('.new-project-modal');
+        modal.classList.remove('hidden');
+
+        let projectBox = document.querySelector('#project-name');
+        let submit = document.querySelector('#project-submit');
+        let cancel = document.querySelector('#project-cancel');
+
+        cancel.onclick = (e) => {
+            e.preventDefault();
+            this.hideProjectModal();
+        }
+
+        if (index !== null) {
+            projectBox.value = this.storageManager.projects[index].name;
+
+            submit.onclick = (e) => {
+                // TODO: VALIDATE ENTRY
+                e.preventDefault();
+
+                this.storageManager.projects[index].name = projectBox.value;
+                this.storageManager.updateLocalStorage();
+                this.renderProjectList();
+                this.hideProjectModal();
+            }
+        }
+        else {
+            submit.onclick = (e) => {
+                // TODO: VALIDATE ENTRY
+                e.preventDefault();
+
+                this.storageManager.projects.push(new TodoProject(projectBox.value, []));
+                this.storageManager.updateLocalStorage();
+                this.renderProjectList();
+                this.hideProjectModal();
+                this.openProject(this.storageManager.projects.length - 1);
+            }
+        }
+    }
+
+    hideProjectModal() {
+        let overlay = document.querySelector('.overlay');
+        overlay.classList.add('hidden');
+
+        let modal = document.querySelector('.new-project-modal');
+        modal.classList.add('hidden');
     }
 
 };
