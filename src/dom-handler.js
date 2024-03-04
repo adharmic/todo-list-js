@@ -104,14 +104,9 @@ class DOMHandler  {
     renderAddItemButton() {
         let addItemButton = document.createElement('button');
         addItemButton.textContent = "Add Item";
-        addItemButton.onclick = () => {
+        addItemButton.onclick = (e) => {
             // Show todo modal
-
-            // For now, just insert a dummy value
-            let testItem2 = new TodoItem("Be GOOFY!", "reach 500 goofiness points", "thursday", 2, "Try doing something spontaneous");
-            this.storageManager.projects[this.currentProject].items.unshift(testItem2);
-            this.openProject(this.currentProject);
-            this.storageManager.updateLocalStorage();
+            this.showTodoModal(null, this.storageManager.projects[this.currentProject]?.items);
         }
 
         this.todoItemsElem.appendChild(addItemButton);
@@ -158,10 +153,15 @@ class DOMHandler  {
         return itemCard;
     }
 
-    showTodoModal(index = null, items) {
-        console.log(index);
-        console.log(items);
+    closeTodoModal() {
+        let overlay = document.querySelector('.overlay');
+        overlay.classList.add('hidden');
 
+        let modal = document.querySelector('.new-item-modal');
+        modal.classList.add('hidden');
+    }
+
+    showTodoModal(index = null, items) {
         let overlay = document.querySelector('.overlay');
         overlay.classList.remove('hidden');
 
@@ -174,6 +174,14 @@ class DOMHandler  {
         let prioBox = document.querySelector('#item-prio');
         let notesBox = document.querySelector('#item-notes');
 
+        let submit = document.querySelector('#todo-submit');
+        let cancel = document.querySelector('#todo-cancel');
+
+        cancel.onclick = (e) => {
+            e.preventDefault();
+            this.closeTodoModal();
+        }
+
         if (index !== null) {
             let currTodo = items[index];
             nameBox.value = currTodo.title;
@@ -181,8 +189,30 @@ class DOMHandler  {
             dateBox.value = currTodo.dueDate;
             prioBox.value = currTodo.prio;
             notesBox.value = currTodo.notes;
-        }
         
+            submit.onclick = (e) => {
+                e.preventDefault();
+                currTodo.title = nameBox.value;
+                currTodo.desc = descBox.value;
+                currTodo.dueDate = dateBox.value;
+                currTodo.prio = prioBox.value;
+                currTodo.notes = notesBox.value;
+
+                this.storageManager.updateLocalStorage();
+                this.openProject(this.currentProject);
+                this.closeTodoModal();
+            };
+        }
+        else {
+            submit.onclick = (e) => {
+                e.preventDefault();
+                let newTodo = new TodoItem(nameBox.value, descBox.value, dateBox.value, prioBox.value, notesBox.value);
+                items.unshift(newTodo);
+                this.openProject(this.currentProject);
+                this.storageManager.updateLocalStorage();
+                this.closeTodoModal();
+            }
+        }
     }
 
 };
