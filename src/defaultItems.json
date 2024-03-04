@@ -5,14 +5,14 @@
             {
                 "title": "Be Silly!",
                 "desc": "reach 500 silliness points",
-                "dueDate": "tomorrow",
+                "dueDate": "2024-03-12",
                 "prio": 2,
                 "notes": "Try doing something wacky"
             },
             {
                 "title": "Be GOOFY!",
                 "desc": "reach 500 goofiness points",
-                "dueDate": "thursday",
+                "dueDate": "2024-03-09",
                 "prio": 2,
                 "notes": "Try doing something spontaneous"
             }
@@ -24,14 +24,14 @@
             {
                 "title": "Eggs",
                 "desc": "Buy a dozen brown eggs",
-                "dueDate": "tomorrow",
+                "dueDate": "2024-03-08",
                 "prio": 2,
                 "notes": "HEB"
             },
             {
                 "title": "Milk",
                 "desc": "Buy 2% milk, store brand",
-                "dueDate": "tomorrow",
+                "dueDate": "2024-03-28",
                 "prio": 2,
                 "notes": "Make sure we have 2 weeks before expiry"
             }

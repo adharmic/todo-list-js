@@ -44,7 +44,7 @@ class DOMHandler  {
             let projectElem = document.createElement('li');
             projectElem.classList.add('project-item');
 
-            let projectNameElem = document.createElement('h1');
+            let projectNameElem = document.createElement('h2');
             projectNameElem.textContent = this.storageManager.projects[i].name;
 
             let deleteProjectButton = document.createElement('button');
@@ -91,7 +91,7 @@ class DOMHandler  {
 
         this.currentProject = index;
         this.todoItemsElem.replaceChildren();
-        let currProjItems = this.storageManager.projects[index].items;
+        let currProjItems = this.storageManager.projects[index]?.items;
 
         this.renderAddItemButton();
 
@@ -121,14 +121,23 @@ class DOMHandler  {
         let itemCard = document.createElement('div');
         itemCard.classList.add('todo-item');
 
-        let itemTitle = document.createElement('h1');
+        let itemTitle = document.createElement('h2');
         itemTitle.textContent = item.title;
 
-        let itemDesc = document.createElement('h1');
+        let itemDesc = document.createElement('h2');
         itemDesc.textContent = item.desc;
 
-        let dueDate = document.createElement('h1');
+        let dueDate = document.createElement('h2');
         dueDate.textContent = item.dueDate;
+
+        let itemActions = document.createElement('div');
+
+        let editItem = document.createElement('button');
+        editItem.textContent = "Edit";
+        editItem.onclick = (e) =>{
+            this.showTodoModal(index, this.storageManager.projects[this.currentProject].items);
+            console.log(`editing item ${index}`);
+        }
 
         let deleteItem = document.createElement('button');
         deleteItem.textContent = "Delete";
@@ -138,16 +147,42 @@ class DOMHandler  {
             this.storageManager.updateLocalStorage();
         }
 
+        itemActions.appendChild(editItem);
+        itemActions.appendChild(deleteItem);
+
         itemCard.appendChild(itemTitle);
         itemCard.appendChild(itemDesc);
         itemCard.appendChild(dueDate);
-        itemCard.appendChild(deleteItem);
+        itemCard.appendChild(itemActions);
 
         return itemCard;
     }
 
-    showTodoModal(index = null) {
+    showTodoModal(index = null, items) {
+        console.log(index);
+        console.log(items);
 
+        let overlay = document.querySelector('.overlay');
+        overlay.classList.remove('hidden');
+
+        let modal = document.querySelector('.new-item-modal');
+        modal.classList.remove('hidden');
+        
+        let nameBox = document.querySelector('#item-name');
+        let descBox = document.querySelector('#item-desc');
+        let dateBox = document.querySelector('#item-date');
+        let prioBox = document.querySelector('#item-prio');
+        let notesBox = document.querySelector('#item-notes');
+
+        if (index !== null) {
+            let currTodo = items[index];
+            nameBox.value = currTodo.title;
+            descBox.value = currTodo.desc;
+            dateBox.value = currTodo.dueDate;
+            prioBox.value = currTodo.prio;
+            notesBox.value = currTodo.notes;
+        }
+        
     }
 
 };
