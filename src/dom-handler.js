@@ -14,7 +14,7 @@ class DOMHandler  {
         this.projectListElem = document.querySelector('.groups');
 
         // DOM element for list of todo items
-        this.todoItemsElem = document.querySelector('.main-content');
+        this.todoItemsElem = document.querySelector('.todo-items');
 
         this.currentProject = 0;
 
@@ -24,11 +24,13 @@ class DOMHandler  {
     }
 
     renderProjectList() {
-        // TODO: Figure out best way to append multiple children to DOM element
+        let addProjectButton = document.querySelector('.add-project-button');
+        addProjectButton.onclick = (e) => {
+            this.showProjectModal(null);
+        }
+
         this.projectListElem.replaceChildren();
         let i = 0;
-
-        this.renderAddProjectButton();
 
         for (let i = 0; i < this.storageManager.projects.length; i++) {
             let projectElem = document.createElement('li');
@@ -68,18 +70,6 @@ class DOMHandler  {
         }
     }
 
-    renderAddProjectButton() {
-        // Open modal, but for now just add dummy project
-        let addProjectButton = document.createElement('li');
-        addProjectButton.textContent = "Add Project";
-        addProjectButton.classList.add('add-project');
-        addProjectButton.onclick = () => {
-            this.showProjectModal();
-        }
-
-        this.projectListElem.appendChild(addProjectButton);
-    }
-
     openProject(index) {
         // Remove active project class from previous project
 
@@ -89,24 +79,22 @@ class DOMHandler  {
         this.todoItemsElem.replaceChildren();
         let currProjItems = this.storageManager.projects[index]?.items;
 
-        let listHeader = document.createElement('div');
-        listHeader.classList.add('list-header');
-
-        let titleElem = document.createElement('h1');
+        let titleElem = document.querySelector('.project-title');
         titleElem.textContent = this.storageManager.projects[index]?.name;
 
-        listHeader.appendChild(titleElem);
+        let taskText = document.querySelector('.task-text');
+        taskText.textContent = 'Tasks';
 
-        let addItemButton = document.createElement('button');
-        addItemButton.textContent = "Add Item";
+        let addItemButton = document.querySelector('.add-item-button');
+        // addItemButton.textContent = "Add Item";
         addItemButton.onclick = (e) => {
-            // Show todo modal
+        //     // Show todo modal
             this.showTodoModal(null, this.storageManager.projects[this.currentProject]?.items);
         }
 
-        listHeader.appendChild(addItemButton);
+        // listHeader.appendChild(addItemButton);
 
-        this.todoItemsElem.appendChild(listHeader);
+        // this.todoItemsElem.appendChild(listHeader);
 
         // Loop through todo items in currProj
         for (let i = 0; i < currProjItems.length; i++) {
@@ -131,7 +119,7 @@ class DOMHandler  {
 
         let editItem = document.createElement('button');
         editItem.textContent = "Edit";
-        editItem.onclick = (e) =>{
+        editItem.onclick = (e) => {
             this.showTodoModal(index, this.storageManager.projects[this.currentProject].items);
             console.log(`editing item ${index}`);
         }
@@ -245,6 +233,11 @@ class DOMHandler  {
                 this.storageManager.projects[index].name = projectBox.value;
                 this.storageManager.updateLocalStorage();
                 this.renderProjectList();
+                // this.openProject(this.currentProject);
+                if (index == this.currentProject) {
+                    let titleText = document.querySelector('.project-title');
+                    titleText.textContent = projectBox.value;
+                }
                 this.hideProjectModal();
             }
         }

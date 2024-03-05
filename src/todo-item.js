@@ -15,6 +15,7 @@ class TodoItem {
         this.dueDate = dueDate;
         this.prio = prio;
         this.notes = notes;
+        this.completed = false;
     } 
 }
 
