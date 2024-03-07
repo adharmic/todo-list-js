@@ -80,7 +80,7 @@ class DOMHandler  {
     }
 
     renderProjectList() {
-        let addProjectButton = document.querySelector('.add-project-button');
+        let addProjectButton = document.querySelector('.add-project-header');
         addProjectButton.onclick = (e) => {
             this.showProjectModal(null);
         }
@@ -157,8 +157,8 @@ class DOMHandler  {
         let titleElem = document.querySelector('.project-title');
         titleElem.textContent = this.storageManager.projects[index]?.name;
 
-        let taskText = document.querySelector('.task-text');
-        taskText.textContent = 'Tasks';
+        // let taskText = document.querySelector('.task-text');
+        // taskText.textContent = 'Tasks';
 
         let addItemButton = document.querySelector('.add-item-button');
         // addItemButton.textContent = "Add Item";

@@ -1,19 +1,31 @@
 html, body {
     margin: 0;
+    width: 100%;
     height: 100%;
     font-family: 'Space Grotesk';
 }
 
 header {
-    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     background-color: bisque;
     width: 100%;
     height: 10%;
 }
 
+header h1 {
+    margin: 0;
+    font-weight: 900;
+}
+
 ul {
     margin: 0;
     padding: 0;
+}
+
+.main-content {
+    width: 90%;
 }
 
 .sidebar {
@@ -27,6 +39,7 @@ ul {
     height: 90%;
     display: grid;
     grid-template-columns: 3fr 8fr;
+    justify-items: center;
 }
 
 h2 {
@@ -34,20 +47,34 @@ h2 {
 }
 
 .todo-item {
+    background-color: bisque;
+    border-radius: 5px;
     width: 100%;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
     align-items: center;
     justify-items: center;
     text-align: center;
+    margin-top: 10px;
+}
+
+.groups {
+    width: 85%;
 }
 
 .todo-items, .groups {
-    width: 85%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
+}
+
+.todo-items {
+    width: 100%;
+}
+
+.todo-items:first-child {
+    margin-top: 0;
 }
 
 .project-item {
@@ -110,6 +137,14 @@ h2 {
     font-size: 24px !important;
 }
 
+.add-item-button {
+    margin-left: 10px;
+}
+
+.add-item-icon {
+    margin: 0 10px;
+    font-size: 24px !important;
+}
 
 .add-project-header {
     display: flex;
@@ -195,23 +230,32 @@ p {
   }
 
   .list-header {
+    margin-top: 10px;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
+    justify-content: space-between;
   }
 
   .taskbar {
+    border-radius: 5px;
     display: flex;
-    justify-content: space-around;
+    align-items: center;
+    /* justify-content: space-around;
     padding-bottom: 5px;
     width: 85%;
-    border-bottom: 1px solid black;
+    border-bottom: 1px solid black; */
+    transition: .3s;
+  }
+
+  .taskbar:hover {
+    cursor: pointer;
+    background-color: bisque;
+    transition: .3s;
   }
 
   .project-title {
-    justify-self: flex-start;
-    margin-left: 5%;
-    margin-bottom: 0;
+    margin: 0;
   }
 
   .task-text {
