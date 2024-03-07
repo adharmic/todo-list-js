@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Dharma</title>
+    <script src="bundle.js" defer></script>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Dokdo&family=Honk&family=Rowdies:wght@300;400;700&family=Space+Grotesk:wght@300..700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <!-- Header for name and stuff -->
+    <header>Daily Dharma</header>
+    <!-- Sidebar with todo list groups -->
+    <div class="page">
+        <div class="sidebar">
+            <div class="project-header">
+                <h2>PROJECTS</h2>
+                <div class="add-project-header">
+                    <h3>New</h3>
+                    <i class="fa fa-plus add-project-button"></i>
+                </div>
+            </div>
+            <ul class="groups">
+            </ul>
+        </div>
+        <div class="main-content">
+            <div class="list-header">
+                <h1 class="project-title"></h1>
+                <div class="taskbar">
+                    <h2 class="task-text"></h2>
+                    <button class="add-item-button">Add Item</button>
+                </div>
+            </div>
+            <div class="todo-items"></div>
+        </div>
+    </div>
+    <div class="overlay hidden"></div>
+    <div class="new-item-modal hidden">
+        <form class="new-item-form" action="">
+            <p>
+                <label for="item-name">Item Name</label>
+                <input type="text" name="item-name" id="item-name">
+            </p>
+            <p>
+                <label for="item-desc">Item Description</label>
+                <input type="text" name="item-desc" id="item-desc">
+            </p>
+            <p>
+                <label for="item-date">Due Date</label>
+                <input type="date" name="item-date" id="item-date">
+            </p>
+            <p>
+                <label for="item-prio">Priority</label>
+                <input type="text" name="item-prio" id="item-prio">
+            </p>
+            <p class="full-width">
+                <label for="item-notes">Item Notes</label>
+                <textarea name="item-notes" id="item-notes" cols="30" rows="4"></textarea>
+            </p>
+            <div class="modal-buttons full-width">
+                <button id="todo-submit">Submit</button>
+                <button id="todo-cancel">Cancel</button>
+            </div>
+        </form>
+    </div>
+    <div class="new-project-modal hidden">
+        <label for="project-name">Project Name</label>
+        <input type="text" name="project-name" id="project-name">
+        <div class="modal-buttons">
+            <button id="project-submit">Submit</button>
+            <button id="project-cancel">Cancel</button>
+        </div>
+    </div>
+</body>
+
+</html>
