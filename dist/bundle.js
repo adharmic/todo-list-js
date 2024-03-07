@@ -1,10 +1,66 @@
+/******/ (() => { // webpackBootstrap
+/******/ 	"use strict";
+/******/ 	var __webpack_modules__ = ([
+/* 0 */,
+/* 1 */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _defaultItems_json__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(2);
+// Handle storage and retrieval from localstorage.
+// Should also handle current list of projects
+// Required methods:
+// 1.  
+
+
+
+class StorageManager {
+    constructor() {
+        // Check localstorage for project list
+        if  (localStorage.getItem("projects") === null) {
+            // No localstorage, so load default data
+            this.projects = _defaultItems_json__WEBPACK_IMPORTED_MODULE_0__;
+            localStorage.setItem("projects", JSON.stringify(_defaultItems_json__WEBPACK_IMPORTED_MODULE_0__));
+        }
+        else {
+            // Localstorage found, so load it!
+            this.projects = JSON.parse(localStorage.getItem("projects"));
+        }
+    }
+
+    updateLocalStorage() {
+        localStorage.setItem("projects", JSON.stringify(this.projects));
+    }
+}
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (StorageManager);  
+
+/***/ }),
+/* 2 */
+/***/ ((module) => {
+
+module.exports = /*#__PURE__*/JSON.parse('[{"name":"My Day","items":[{"title":"Be Silly!","desc":"reach 500 silliness points","dueDate":"2024-03-12","prio":2,"notes":"Try doing something wacky"},{"title":"Be GOOFY!","desc":"reach 500 goofiness points","dueDate":"2024-03-09","prio":2,"notes":"Try doing something spontaneous"}]},{"name":"Grocery","items":[{"title":"Eggs","desc":"Buy a dozen brown eggs","dueDate":"2024-03-08","prio":2,"notes":"HEB"},{"title":"Milk","desc":"Buy 2% milk, store brand","dueDate":"2024-03-28","prio":2,"notes":"Make sure we have 2 weeks before expiry"}]}]');
+
+/***/ }),
+/* 3 */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _todo_item__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(4);
+/* harmony import */ var _todo_project__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(5);
 // TODO: 
 // Implement priority system
 // Implement completion system
 // Color list items based on priority
 
-import TodoItem from "./todo-item";
-import TodoProject from "./todo-project";
+
+
 
 class DOMHandler  {
     constructor(storageManager) {
@@ -217,7 +273,7 @@ class DOMHandler  {
             submit.onclick = (e) => {
                 // TODO: VALIDATE ENTRY
                 e.preventDefault();
-                let newTodo = new TodoItem(nameBox.value, descBox.value, dateBox.value, prioBox.value, notesBox.value);
+                let newTodo = new _todo_item__WEBPACK_IMPORTED_MODULE_0__["default"](nameBox.value, descBox.value, dateBox.value, prioBox.value, notesBox.value);
                 items.unshift(newTodo);
                 this.openProject(this.currentProject);
                 this.storageManager.updateLocalStorage();
@@ -265,7 +321,7 @@ class DOMHandler  {
                 // TODO: VALIDATE ENTRY
                 e.preventDefault();
 
-                this.storageManager.projects.push(new TodoProject(projectBox.value, []));
+                this.storageManager.projects.push(new _todo_project__WEBPACK_IMPORTED_MODULE_1__["default"](projectBox.value, []));
                 this.storageManager.updateLocalStorage();
                 this.renderProjectList();
                 this.hideProjectModal();
@@ -284,4 +340,159 @@ class DOMHandler  {
 
 };
 
-export default DOMHandler;
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (DOMHandler);
+
+/***/ }),
+/* 4 */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+// To-do item should have:
+// title: name of to-do item
+// desc: what needs to be done to complete the todo
+// dueDate: when the to-do item should be done
+// priority: how important this item is compared to others
+// -- let's do 3 prio levels: low, medium, high.
+// -- Medium prio should be default
+// notes: added details for the to-do item
+// checklist: ???
+
+class TodoItem {
+    constructor(title, desc, dueDate, prio = 1, notes = "") {
+        this.title = title;
+        this.desc = desc;
+        this.dueDate = dueDate;
+        this.prio = prio;
+        this.notes = notes;
+        this.completed = false;
+    } 
+}
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (TodoItem);
+
+/***/ }),
+/* 5 */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+class TodoProject {
+    constructor(name, items) {
+        this.name = name;
+        this.items = items;
+    }
+}
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (TodoProject);
+
+/***/ })
+/******/ 	]);
+/************************************************************************/
+/******/ 	// The module cache
+/******/ 	var __webpack_module_cache__ = {};
+/******/ 	
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/ 		// Check if module is in cache
+/******/ 		var cachedModule = __webpack_module_cache__[moduleId];
+/******/ 		if (cachedModule !== undefined) {
+/******/ 			return cachedModule.exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = __webpack_module_cache__[moduleId] = {
+/******/ 			// no module.id needed
+/******/ 			// no module.loaded needed
+/******/ 			exports: {}
+/******/ 		};
+/******/ 	
+/******/ 		// Execute the module function
+/******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
+/******/ 	
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/ 	
+/************************************************************************/
+/******/ 	/* webpack/runtime/define property getters */
+/******/ 	(() => {
+/******/ 		// define getter functions for harmony exports
+/******/ 		__webpack_require__.d = (exports, definition) => {
+/******/ 			for(var key in definition) {
+/******/ 				if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
+/******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
+/******/ 				}
+/******/ 			}
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/hasOwnProperty shorthand */
+/******/ 	(() => {
+/******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/make namespace object */
+/******/ 	(() => {
+/******/ 		// define __esModule on exports
+/******/ 		__webpack_require__.r = (exports) => {
+/******/ 			if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 				Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 			}
+/******/ 			Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/************************************************************************/
+var __webpack_exports__ = {};
+// This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
+(() => {
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _storage_manager__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1);
+/* harmony import */ var _dom_handler__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(3);
+/* harmony import */ var _todo_item__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(4);
+/* harmony import */ var _todo_project__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(5);
+
+
+
+
+
+
+const storageManager = new _storage_manager__WEBPACK_IMPORTED_MODULE_0__["default"]();
+const domHandler = new _dom_handler__WEBPACK_IMPORTED_MODULE_1__["default"](storageManager); 
+
+function startApp() {
+    const element = document.createElement('div');
+
+    element.innerHTML = 'Hello!!';
+
+    return element;
+
+    // Loop through JSON to populate projects and list items
+    // What project should open by default?
+
+    // Create DOM Handler. If localstorage has data, use that as projectList. If not, use defaultItems.
+}
+
+// startApp();
+
+function createTestData() {
+    let projects = [];
+    let testItem = new _todo_item__WEBPACK_IMPORTED_MODULE_2__["default"]("Be Silly!", "reach 500 silliness points", "tomorrow", 2, "Try doing something wacky");
+    let testItem2 = new _todo_item__WEBPACK_IMPORTED_MODULE_2__["default"]("Be GOOFY!", "reach 500 goofiness points", "thursday", 2, "Try doing something spontaneous");
+    let testItems = [testItem, testItem2];
+    let testProject = new _todo_project__WEBPACK_IMPORTED_MODULE_3__["default"]("My Day", testItems);
+    projects.push(testProject);
+    localStorage.setItem("projects", JSON.stringify(projects));
+    console.log(JSON.stringify(projects));
+}
+
+// createTestData();
+})();
+
+/******/ })()
+;
+//# sourceMappingURL=bundle.js.map
