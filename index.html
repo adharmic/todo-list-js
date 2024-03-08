@@ -47,6 +47,9 @@
     </div>
     <div class="overlay hidden"></div>
     <div class="new-item-modal hidden">
+        <div class="item-modal-title">
+            <h2 class="item-modal-title-text">Todo Item</h2>
+        </div>
         <form class="new-item-form" action="">
             <p>
                 <label for="item-name">Item Name</label>
@@ -60,10 +63,21 @@
                 <label for="item-date">Due Date</label>
                 <input type="date" name="item-date" id="item-date">
             </p>
-            <p>
-                <label for="item-prio">Priority</label>
-                <input type="text" name="item-prio" id="item-prio">
-            </p>
+            <div>
+                <label>Priority</label>
+                <p class="prio-buttons">
+                    <input type="radio" name="prio" id="prio1" />
+                    <label for="prio1">High</label>
+    
+                    <input type="radio" name="prio" id="prio2" />
+                    <label for="prio2">Medium</label>
+    
+                    <input type="radio" name="prio" id="prio3" />
+                    <label for="prio3">Low</label>
+                    <!-- <label for="item-prio">Priority</label>
+                    <input type="text" name="item-prio" id="item-prio"> -->
+                </p>
+            </div>
             <p class="full-width">
                 <label for="item-notes">Item Notes</label>
                 <textarea name="item-notes" id="item-notes" cols="30" rows="4"></textarea>
