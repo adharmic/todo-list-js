@@ -188,14 +188,34 @@ class DOMHandler {
             prioIndicator.classList.add('prio3-indicator');
         }
 
+        let completedCheck = document.createElement("input");
+        completedCheck.setAttribute('type', 'checkbox');
+        completedCheck.classList.add('completed-checkbox');
+
+        completedCheck.onclick = (e) => {
+            let currProjItems = this.storageManager.projects[this.currentProject]?.items;
+            item.completed = completedCheck.checked;
+            currProjItems[index] = item;
+            this.storageManager.updateLocalStorage();
+            this.openProject(this.currentProject);
+            // itemCard.classList.add('completed-todo');
+        }
+
+        completedCheck.checked = item.completed;
+        if (item.completed) {
+            itemCard.classList.add('completed-todo');
+        }
+
         let itemTitle = document.createElement('h2');
         itemTitle.textContent = item.title;
+        itemTitle.classList.add('item-title-text');
 
         let itemDesc = document.createElement('h2');
         itemDesc.textContent = item.desc;
 
         let dueDate = document.createElement('h2');
         dueDate.textContent = item.dueDate;
+        dueDate.classList.add('due-date-text');
 
         let itemActions = document.createElement('div');
         itemActions.classList.add('item-actions');
@@ -231,8 +251,8 @@ class DOMHandler {
         itemActions.appendChild(deleteItemButton);
 
         itemCard.appendChild(prioIndicator);
+        itemCard.appendChild(completedCheck);
         itemCard.appendChild(itemTitle);
-        itemCard.appendChild(itemDesc);
         itemCard.appendChild(dueDate);
         itemCard.appendChild(itemActions);
 
@@ -355,7 +375,7 @@ class DOMHandler {
         let overlay = document.querySelector('.overlay');
         overlay.classList.remove('hidden');
 
-        let modal = document.querySelector('.new-project-modal');
+        let modal = document.querySelector('.modal-wrapper');
         modal.classList.remove('hidden');
 
         let projectBox = document.querySelector('#project-name');
@@ -404,7 +424,7 @@ class DOMHandler {
         let overlay = document.querySelector('.overlay');
         overlay.classList.add('hidden');
 
-        let modal = document.querySelector('.new-project-modal');
+        let modal = document.querySelector('.modal-wrapper');
         modal.classList.add('hidden');
     }
 };
