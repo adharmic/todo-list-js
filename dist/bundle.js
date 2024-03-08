@@ -62,10 +62,10 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-class DOMHandler  {
+class DOMHandler {
     constructor(storageManager) {
         this.storageManager = storageManager;
-        
+
         // DOM element for list of projects
         this.projectListElem = document.querySelector('.groups');
 
@@ -77,6 +77,7 @@ class DOMHandler  {
         // Open first project in list
         this.renderProjectList();
         this.openProject(this.currentProject);
+        document.querySelector('.project-item')?.classList.add('selected-project');
     }
 
     renderProjectList() {
@@ -114,7 +115,7 @@ class DOMHandler  {
 
             let deleteProjectButton = document.createElement('div');
             deleteProjectButton.classList.add("project-button");
-            
+
             let deleteProjectIcon = document.createElement('i');
             deleteProjectIcon.classList.add("fa");
             deleteProjectIcon.classList.add("fa-trash");
@@ -138,7 +139,9 @@ class DOMHandler  {
             projectElem.appendChild(projectNameElem);
 
             projectElem.onclick = () => {
+                document.querySelector('.selected-project')?.classList.remove('selected-project');
                 this.openProject(i);
+                projectElem.classList.add('selected-project');
             }
 
             this.projectListElem.appendChild(projectElem);
@@ -157,19 +160,10 @@ class DOMHandler  {
         let titleElem = document.querySelector('.project-title');
         titleElem.textContent = this.storageManager.projects[index]?.name;
 
-        // let taskText = document.querySelector('.task-text');
-        // taskText.textContent = 'Tasks';
-
-        let addItemButton = document.querySelector('.add-item-button');
-        // addItemButton.textContent = "Add Item";
+        let addItemButton = document.querySelector('.taskbar');
         addItemButton.onclick = (e) => {
-        //     // Show todo modal
             this.showTodoModal(null, this.storageManager.projects[this.currentProject]?.items);
         }
-
-        // listHeader.appendChild(addItemButton);
-
-        // this.todoItemsElem.appendChild(listHeader);
 
         // Loop through todo items in currProj
         for (let i = 0; i < currProjItems.length; i++) {
@@ -181,6 +175,19 @@ class DOMHandler  {
         let itemCard = document.createElement('div');
         itemCard.classList.add('todo-item');
 
+        let prioIndicator = document.createElement('div');
+        prioIndicator.classList.add('prio-indicator');
+        
+        if (item.prio == 1) {
+            prioIndicator.classList.add('prio1-indicator');
+        }
+        if (item.prio == 2) {
+            prioIndicator.classList.add('prio2-indicator');
+        }
+        if (item.prio == 3) {
+            prioIndicator.classList.add('prio3-indicator');
+        }
+
         let itemTitle = document.createElement('h2');
         itemTitle.textContent = item.title;
 
@@ -191,25 +198,39 @@ class DOMHandler  {
         dueDate.textContent = item.dueDate;
 
         let itemActions = document.createElement('div');
+        itemActions.classList.add('item-actions');
 
-        let editItem = document.createElement('button');
-        editItem.textContent = "Edit";
-        editItem.onclick = (e) => {
+        let editItemButton = document.createElement('div');
+        editItemButton.classList.add("project-button");
+
+        let editItem = document.createElement('i');
+        editItem.classList.add('fa');
+        editItem.classList.add('fa-pencil');
+        editItemButton.onclick = (e) => {
             this.showTodoModal(index, this.storageManager.projects[this.currentProject].items);
             console.log(`editing item ${index}`);
         }
 
-        let deleteItem = document.createElement('button');
-        deleteItem.textContent = "Delete";
-        deleteItem.onclick = (e) => {
+        editItemButton.appendChild(editItem);
+
+        let deleteItemButton = document.createElement('div');
+        deleteItemButton.classList.add("project-button");
+
+        let deleteItem = document.createElement('i');
+        deleteItem.classList.add('fa');
+        deleteItem.classList.add('fa-trash');
+        deleteItemButton.onclick = (e) => {
             this.storageManager.projects[this.currentProject].items.splice(index, 1);
             this.openProject(this.currentProject);
             this.storageManager.updateLocalStorage();
         }
 
-        itemActions.appendChild(editItem);
-        itemActions.appendChild(deleteItem);
+        deleteItemButton.appendChild(deleteItem);
 
+        itemActions.appendChild(editItemButton);
+        itemActions.appendChild(deleteItemButton);
+
+        itemCard.appendChild(prioIndicator);
         itemCard.appendChild(itemTitle);
         itemCard.appendChild(itemDesc);
         itemCard.appendChild(dueDate);
@@ -232,11 +253,13 @@ class DOMHandler  {
 
         let modal = document.querySelector('.new-item-modal');
         modal.classList.remove('hidden');
-        
+
         let nameBox = document.querySelector('#item-name');
         let descBox = document.querySelector('#item-desc');
         let dateBox = document.querySelector('#item-date');
-        let prioBox = document.querySelector('#item-prio');
+        let prioBox1 = document.querySelector('#prio1');
+        let prioBox2 = document.querySelector('#prio2');
+        let prioBox3 = document.querySelector('#prio3');
         let notesBox = document.querySelector('#item-notes');
 
         let submit = document.querySelector('#todo-submit');
@@ -252,17 +275,44 @@ class DOMHandler  {
             nameBox.value = currTodo.title;
             descBox.value = currTodo.desc;
             dateBox.value = currTodo.dueDate;
-            prioBox.value = currTodo.prio;
             notesBox.value = currTodo.notes;
-        
+
+            console.dir(prioBox1);
+
+            switch (currTodo.prio) {
+                case 1:
+                    prioBox1.checked = true;
+                    break;
+                case 2:
+                    prioBox2.checked = true;
+                    break;
+                case 3:
+                    prioBox3.checked = true;
+                    break;
+
+                default:
+                    break;
+            }
+
             submit.onclick = (e) => {
                 // TODO: VALIDATE ENTRY
                 e.preventDefault();
                 currTodo.title = nameBox.value;
                 currTodo.desc = descBox.value;
                 currTodo.dueDate = dateBox.value;
-                currTodo.prio = prioBox.value;
                 currTodo.notes = notesBox.value;
+
+                if (prioBox1.checked) {
+                    currTodo.prio = 1;
+                }
+
+                if (prioBox2.checked) {
+                    currTodo.prio = 2;
+                }
+
+                if (prioBox3.checked) {
+                    currTodo.prio = 3;
+                }
 
                 this.storageManager.updateLocalStorage();
                 this.openProject(this.currentProject);
@@ -270,10 +320,29 @@ class DOMHandler  {
             };
         }
         else {
+            nameBox.value = "";
+            descBox.value = "";
+            dateBox.value = "";
+            notesBox.value = "";
+            prioBox1.checked = 0;
+            prioBox2.checked = 0;
+            prioBox3.checked = 0;
             submit.onclick = (e) => {
                 // TODO: VALIDATE ENTRY
                 e.preventDefault();
-                let newTodo = new _todo_item__WEBPACK_IMPORTED_MODULE_0__["default"](nameBox.value, descBox.value, dateBox.value, prioBox.value, notesBox.value);
+                let prio = 0;
+                if (prioBox1.checked) {
+                    prio = 1;
+                }
+    
+                if (prioBox2.checked) {
+                    prio = 2;
+                }
+    
+                if (prioBox3.checked) {
+                    prio = 3;
+                }
+                let newTodo = new _todo_item__WEBPACK_IMPORTED_MODULE_0__["default"](nameBox.value, descBox.value, dateBox.value, prio, notesBox.value);
                 items.unshift(newTodo);
                 this.openProject(this.currentProject);
                 this.storageManager.updateLocalStorage();
@@ -317,6 +386,7 @@ class DOMHandler  {
             }
         }
         else {
+            projectBox.value = "";
             submit.onclick = (e) => {
                 // TODO: VALIDATE ENTRY
                 e.preventDefault();
@@ -337,7 +407,6 @@ class DOMHandler  {
         let modal = document.querySelector('.new-project-modal');
         modal.classList.add('hidden');
     }
-
 };
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (DOMHandler);

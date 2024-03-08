@@ -51,11 +51,27 @@ h2 {
     border-radius: 5px;
     width: 100%;
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr 10fr 10fr 10fr 10fr;
     align-items: center;
     justify-items: center;
     text-align: center;
     margin-top: 10px;
+}
+
+.prio-indicator {
+    width: 100%;
+    height: 100%;
+    border-radius: 5px 0 0 5px;
+}
+
+.prio1-indicator {
+    background-color: red;
+}
+.prio2-indicator {
+    background-color: yellow;
+}
+.prio3-indicator {
+    background-color: green;
 }
 
 .groups {
@@ -118,6 +134,7 @@ h2 {
 }
 
 .project-button:hover {
+    cursor: pointer;
     background-color: rgb(102, 63, 13);
     color:  white;
     transition: .3s;
@@ -164,12 +181,30 @@ h2 {
 
 .new-item-modal {
     z-index: 2;
-    padding: 15px;
     background-color: blanchedalmond;
     position: fixed;
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.item-modal-title {
+    width: 100%;
+    border-radius: 5px;
+    background-color: bisque;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.item-modal-title-text {
+    font-size: x-large;
+    margin: 10px 0;
 }
 
 p {
@@ -181,6 +216,7 @@ p {
 }
 
 .new-item-form {
+    padding: 15px;
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-gap: 20px;
@@ -241,10 +277,6 @@ p {
     border-radius: 5px;
     display: flex;
     align-items: center;
-    /* justify-content: space-around;
-    padding-bottom: 5px;
-    width: 85%;
-    border-bottom: 1px solid black; */
     transition: .3s;
   }
 
@@ -275,4 +307,58 @@ p {
     font-size: x-large;
     font-weight: 900;
     margin: 10px 0;
+  }
+
+  .item-actions {
+    display: flex;
+  }
+
+  .selected-project {
+    outline: 2px solid cornflowerblue;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  }
+
+  .prio-buttons {
+    width: fit-content;
+    border: 1px solid brown;
+    border-radius: 5px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: row !important;
+    flex-wrap: nowrap;
+  }
+
+  .prio-buttons input {
+    display: none;
+  }
+
+  .prio-buttons label {
+    padding: 0px 16px;
+    border-right: 1px solid #ccc;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+
+  .prio-buttons label:last-of-type {
+    border-right: 0;
+  }
+
+  .prio-buttons label:hover {
+    background-color: #eee;
+  }
+
+  /* .prio-buttons input:checked + label {
+    background-color: #becbff;
+  } */
+
+  #prio1:checked + label {
+    background-color: red;
+  }
+
+  #prio2:checked + label {
+    background-color: yellow;
+  }
+
+  #prio3:checked + label {
+    background-color: green;
   }
