@@ -3,13 +3,15 @@ html, body {
     width: 100%;
     height: 100%;
     font-family: 'Space Grotesk';
+    background-color: #f1f2f6;
 }
 
 header {
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: bisque;
+    background-image: linear-gradient(120deg, #27187e 0%, #758bfd 100%);
+    color: #f1f2f6;
     width: 100%;
     height: 10%;
 }
@@ -29,7 +31,8 @@ ul {
 }
 
 .sidebar {
-    background-color: wheat;
+    /* background-image: linear-gradient(120deg, #27187e 0%, #aeb8fe 100%); */
+    background-color: #aeb8fe;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -48,7 +51,8 @@ h2 {
 
 .todo-item {
     position: relative;
-    background-color: bisque;
+    background-image: linear-gradient(120deg, #758bfd 0%, #aeb8fe 100%);
+    color: black;
     border-radius: 5px;
     width: 100%;
     display: grid;
@@ -57,6 +61,7 @@ h2 {
     justify-items: center;
     text-align: center;
     margin-top: 10px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
 .completed-checkbox {
@@ -70,16 +75,17 @@ h2 {
     width: 100%;
     height: 100%;
     border-radius: 5px 0 0 5px;
+    border-right: 5px solid #f1f2f6;
 }
 
 .prio1-indicator {
-    background-color: red;
+    background-color: rgb(255, 70, 24);
 }
 .prio2-indicator {
-    background-color: yellow;
+    background-color: rgb(255, 252, 48);
 }
 .prio3-indicator {
-    background-color: green;
+    background-color: rgba(51, 192, 93, 0.726);
 }
 
 .groups {
@@ -109,7 +115,7 @@ h2 {
     align-items: center;
     text-align: center;
     border-radius: 5px;
-    background-color: beige;
+    background-color: #f1f2f6;
     margin-top: 10px;
     transition: .3s;
 }
@@ -121,7 +127,7 @@ h2 {
 .project-item:hover {
     transition: .3s;
     cursor: pointer;
-    background-color: chocolate;
+    background-color: #ffad4f;
 }
 
 .project-buttons {
@@ -143,9 +149,15 @@ h2 {
 
 .project-button:hover {
     cursor: pointer;
-    background-color: rgb(102, 63, 13);
-    color:  white;
+    background-color: #758bfd;
+    color:  #27187e;
     transition: .3s;
+}
+
+.project-item .project-button:hover {
+    background-color: #ff8600;
+    color:  #f1f2f6;
+
 }
 
 .project-item i {
@@ -181,15 +193,19 @@ h2 {
 }
 
 .add-project-header:hover {
-    background-color: brown;
+    background-color: #27187e;
     cursor: pointer;
-    color: white;
+    color: #f1f2f6;
     transition: .3s;
+}
+
+input[type='checkbox'] {
+    accent-color: #27187e;
 }
 
 .new-item-modal {
     z-index: 2;
-    background-color: blanchedalmond;
+    background-color: #f1f2f6;
     position: fixed;
     left: 50%;
     top: 50%;
@@ -202,9 +218,10 @@ h2 {
 }
 
 .modal-wrapper {
+    width: 30%;
     border-radius: 5px;
     z-index: 2;
-    background-color: blanchedalmond;
+    background-color: #f1f2f6;
     position: fixed;
     left: 50%;
     top: 50%;
@@ -217,8 +234,9 @@ h2 {
 
 .item-modal-title {
     width: 100%;
-    border-radius: 5px;
-    background-color: bisque;
+    border-radius: 5px 5px 0 0;
+    background-image: linear-gradient(120deg, #27187e 0%, #758bfd 100%);
+    color: #f1f2f6;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -260,6 +278,8 @@ p {
 .modal-buttons {
     display: grid;
     grid-template-columns: 1fr 1fr;
+    background-image: linear-gradient(120deg, #27187e 0%, #758bfd 100%);
+    border-radius: 5px;
 }
 
 .overlay {
@@ -270,7 +290,7 @@ p {
     right: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.7);
     backdrop-filter: blur(3px);
     z-index: 1;
   }
@@ -284,6 +304,7 @@ p {
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%); */
+    width: 90%;
     padding: 15px;
     display: grid;
     grid-template-rows: 2fr 1fr;
@@ -312,7 +333,7 @@ p {
 
   .taskbar:hover {
     cursor: pointer;
-    background-color: bisque;
+    background-color: #aeb8fe;
     transition: .3s;
   }
 
@@ -344,13 +365,13 @@ p {
   }
 
   .selected-project {
-    outline: 2px solid cornflowerblue;
+    outline: 2px solid #27187e;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   }
 
   .prio-buttons {
     width: fit-content;
-    border: 1px solid brown;
+    border: 1px solid #27187e;
     border-radius: 5px;
     overflow: hidden;
     display: flex;
@@ -374,7 +395,7 @@ p {
   }
 
   .prio-buttons label:hover {
-    background-color: #eee;
+    background-color: #aeb8fe;
   }
 
   /* .prio-buttons input:checked + label {
@@ -382,15 +403,15 @@ p {
   } */
 
   #prio1:checked + label {
-    background-color: red;
+    background-color: rgb(255, 70, 24);
   }
 
   #prio2:checked + label {
-    background-color: yellow;
+    background-color: rgb(255, 252, 48);
   }
 
   #prio3:checked + label {
-    background-color: green;
+    background-color: rgba(51, 192, 93);
   }
 
   .item-title-text {
@@ -412,4 +433,24 @@ p {
     display: block;
     transform: translateX(-37%);
     transition: all 0.3s;
+  }
+
+  .modal-buttons button {
+    background-color: rgb(0, 0,0, 0);
+    font-family: 'Space Grotesk';
+    color: #f1f2f6;
+    border: 0;
+    font-weight: 900;
+  }
+
+  .modal-buttons button:hover {
+    cursor: pointer;
+    background-color: #27187e;
+    transition: all 0.3s;
+    border-radius: 5px;
+  }
+
+  .modal-buttons:first-child {
+    border-right: 2px solid #27187e;
+    border-radius: 5px 0 0 5px;
   }
