@@ -47,15 +47,23 @@ h2 {
 }
 
 .todo-item {
+    position: relative;
     background-color: bisque;
     border-radius: 5px;
     width: 100%;
     display: grid;
-    grid-template-columns: 1fr 10fr 10fr 10fr 10fr;
+    grid-template-columns: 1fr 2fr 10fr 10fr 5fr;
     align-items: center;
     justify-items: center;
     text-align: center;
     margin-top: 10px;
+}
+
+.completed-checkbox {
+    cursor: pointer;
+    width: 1.5em;
+    height: 1.5em;
+    border-radius: 50%;
 }
 
 .prio-indicator {
@@ -193,6 +201,20 @@ h2 {
     justify-content: center;
 }
 
+.modal-wrapper {
+    border-radius: 5px;
+    z-index: 2;
+    background-color: blanchedalmond;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
 .item-modal-title {
     width: 100%;
     border-radius: 5px;
@@ -254,15 +276,23 @@ p {
   }
 
   .new-project-modal {
+    /* border-radius: 5px;
     z-index: 2;
     background-color: blanchedalmond;
     position: fixed;
     padding: 15px;
     left: 50%;
     top: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%); */
+    padding: 15px;
     display: grid;
-    grid-template-rows: 1fr 1fr 1fr;
+    grid-template-rows: 2fr 1fr;
+    grid-gap: 20px;
+  }
+
+  .project-name-label {
+    display: flex;
+    flex-direction: column;
   }
 
   .list-header {
@@ -361,4 +391,25 @@ p {
 
   #prio3:checked + label {
     background-color: green;
+  }
+
+  .item-title-text {
+    justify-self: start;
+  }
+
+  .due-date-text {
+    justify-self: end;
+  }
+
+  .completed-todo:after {
+    position: absolute;
+    left: 37%;
+    top: 50%;
+    height: .1em;
+    background: black;
+    content: "";
+    width: 73%;
+    display: block;
+    transform: translateX(-37%);
+    transition: all 0.3s;
   }
